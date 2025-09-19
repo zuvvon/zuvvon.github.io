@@ -20,10 +20,11 @@ main:
 categories:
   - title: "Algorithm"
     url: /categories/algorithm/
+  - title: "AI"
+    url: /categories/ai/
   - title: "CS"
     url: /categories/cs/
   - title: "Java"
     url: /categories/java/
-  - title: "AI"
-    url: /categories/ai/
+
 
