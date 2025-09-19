@@ -20,7 +20,7 @@ minimal_mistakes_skin: "plum" # "default" "air", "aqua", ...
 # Site Settings
 locale: "ko-KR" #"en-US"
 title: "Juwon's Space" # 상단 헤더에 보이는 블로그 명
-title_separator: "✨"
+title_separator: "&#124;"
 subtitle: ""
 name: "zuvvon" # 블로그 닉네임 설정
 description: "0에서 시작해 1로 나아가는 공간" # 블로그 설명
