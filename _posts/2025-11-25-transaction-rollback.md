@@ -1,6 +1,6 @@
 ---
 title: "[Java] 트랜잭션 롤백"
-excerpt: "Spring @Transactional의 예외 처리 규칙과 Checked/Unchecked 예외별 롤백 동작을 정"
+excerpt: "Spring @Transactional의 예외 처리 규칙과 Checked/Unchecked 예외별 롤백 동작을 정리"
 
 categories:
   - Java
