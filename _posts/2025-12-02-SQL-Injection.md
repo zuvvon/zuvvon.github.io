@@ -110,6 +110,6 @@ String q = "SELECT u FROM User u WHERE u.username = '" + username + "'";
 
 ---
 
-## ✨ 한 줄 결론
+## ✨ 결론
 
-<mark>**SQL Injection 방어 핵심: “쿼리와 데이터를 절대 섞지 않는다.”**</mark>
+<mark>SQL Injection 방어 핵심: “쿼리와 데이터를 절대 섞지 않는다.”</mark>
