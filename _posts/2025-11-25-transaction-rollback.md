@@ -1,11 +1,11 @@
 ---
-title: "[Java] 트랜잭션 롤백"
+title: "[CS] 트랜잭션 롤백"
 excerpt: "Spring @Transactional의 예외 처리 규칙과 Checked/Unchecked 예외별 롤백 동작을 정리"
 
 categories:
-  - Java
+  - CS
 tags:
-  - [Java, Transaction, JPA]
+  - [CS, Transaction, JPA]
 
 permalink: /categories1/transaction-rollback/
 toc: true
