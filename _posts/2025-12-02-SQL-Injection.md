@@ -26,7 +26,8 @@ SQL Injection은 **사용자 입력이 SQL 구조에 그대로 포함될 때** �
 문자열 연결로 SQL을 만들면 입력값이 SQL 구문으로 해석된다.
 
 ```java
-String sql = "SELECT * FROM users WHERE username = '" + username + "'";
+String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
+
 ```
 
 공격자 입력:
