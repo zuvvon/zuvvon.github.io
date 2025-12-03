@@ -12,8 +12,8 @@ permalink: /categories2/post-name-here-2/
 toc: true
 toc_sticky: true
 
-date: 2022-07-24
-last_modified_at: 2022-07-24
+date: 2025-12-04
+last_modified_at: 2025-12-04
 ---
 
 ## 🦥 본문
