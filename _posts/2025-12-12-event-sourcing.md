@@ -1,6 +1,6 @@
 ---
-title: "[CS] 이벤트 소싱(Event Sourcing)과 함께 등장한 핵심 개념들"
-excerpt: "Event Sourcing의 기본 개념부터 읽기 성능, Projection, Snapshot, 멱등성, CQRS까지 흐름으로 정리"
+title: "[CS] 이벤트 소싱(Event Sourcing)"
+excerpt: "Event Sourcing의 기본 개념부터 읽기 성능, Projection, Snapshot, 멱등성, CQRS 까지 정리"
 
 categories:
   - CS
@@ -16,8 +16,7 @@ last_modified_at: 2025-12-12
 ---
 
 ## ⚡ 한 줄 요약
-Event Sourcing은 **이벤트를 진실의 원천으로 삼는 대신 읽기 성능 문제가 발생하는 구조**이기 때문에,  
-이를 보완하기 위해 **집계 테이블(Projection), 스냅샷(Snapshot), 멱등성, CQRS** 같은 개념이 함께 사용된다.
+Event Sourcing은 **이벤트를 진실의 원천으로 삼는 대신 읽기 성능 문제가 발생하는 구조**이기 때문에,이를 보완하기 위해 **집계 테이블(Projection), 스냅샷(Snapshot), 멱등성, CQRS** 같은 개념이 함께 사용된다.
 
 ---
 
@@ -30,7 +29,7 @@ Event Sourcing은 데이터의 **최종 상태(State)** 를 저장하는 대신,
 “현재 상태가 무엇인가”에 집중한다.
 
 반면 Event Sourcing은  
-“어떤 일이 어떤 순서로 발생했는가”를 저장한다.
+<mark>“어떤 일이 어떤 순서로 발생했는가”</mark>를 저장한다.
 
 즉, 상태는 결과일 뿐이고  
 **진짜 데이터는 상태를 만들어낸 이벤트의 흐름**이라는 관점이다.
@@ -46,7 +45,8 @@ Event Sourcing은 데이터의 **최종 상태(State)** 를 저장하는 대신,
 
 주문 테이블에 현재 상태만 저장한다.
 
-예시)
+예시)  
+
 order_id = 101  
 status = COMPLETED  
 total_price = 50,000  
@@ -57,12 +57,13 @@ total_price = 50,000
 
 ---
 
-### 🟩 2) 이벤트를 저장하는 방식 (Event Sourcing)
+### 🟩 2) 이벤트를 저장하는 방식 
 
 주문의 최종 상태를 직접 저장하지 않고,  
 주문 상태를 변경시킨 이벤트를 순서대로 기록한다.
 
-예시)
+예시) 
+
 [1] OrderCreated  
 [2] PaymentRequested  
 [3] PaymentFailed  
@@ -83,61 +84,51 @@ Event Sourcing이다.
 
 SELECT balance FROM account WHERE account_id = 1;
 
-하지만 Event Sourcing에서는  
-현재 상태가 데이터베이스에 바로 저장되어 있지 않다.
+하지만 Event Sourcing에서는 현재 상태가 데이터베이스에 바로 저장되어 있지 않다.
 
-예시 이벤트)
+예시 이벤트)  
+
 [1] Deposit  +100  
 [2] Withdraw -30  
 [3] Deposit  +50  
 
-현재 잔액을 알기 위해서는  
-이벤트를 처음부터 끝까지 재생하며 누적 계산해야 한다.
+현재 잔액을 알기 위해서는 이벤트를 처음부터 끝까지 재생하며 누적 계산해야 한다.
 
-이벤트 수가 많아질수록  
-읽기 비용은 급격히 증가한다.
+이벤트 수가 많아질수록 읽기 비용은 급격히 증가한다.
 
-결론적으로,  
-Event Sourcing은 **쓰기(write)는 단순하지만 읽기(read)는 계산 비용이 큰 구조**를 가진다.
+결론적으로, Event Sourcing은 **쓰기는 단순하지만 읽기는 계산 비용이 큰 구조**를 가진다.
 
 ---
 
 ## 🧮 집계 테이블(Projection)이란?
 
-이 읽기 성능 문제를 해결하기 위해 등장한 개념이  
-**집계 테이블(Projection)** 이다.
+이 읽기 성능 문제를 해결하기 위해 등장한 개념이 **집계 테이블(Projection)** 이다.
 
-Projection은  
-이벤트를 기반으로 미리 계산해 둔 **읽기 전용 결과 테이블**이다.
+Projection은 이벤트를 기반으로 미리 계산해 둔 **읽기 전용 결과 테이블**이다.
 
-이벤트는 진실의 원천(Source of Truth)으로 유지하고,  
-조회는 Projection만 수행한다.
+이벤트는 진실의 원천(Source of Truth)으로 유지하고, 조회는 Projection만 수행한다.
 
-예시)
+예시)  
 account_id | balance  
 -----------|--------  
 1          | 120  
 
-화면이나 API 요청은 Projection만 조회하기 때문에  
-읽기 성능을 크게 개선할 수 있다.
+화면이나 API 요청은 Projection만 조회하기 때문에 읽기 성능을 크게 개선할 수 있다.
 
 ---
 
 ## 📸 스냅샷(Snapshot)이란?
 
-이벤트가 계속 쌓이면  
-Projection을 다시 만드는 작업조차 오래 걸릴 수 있다.
+이벤트가 계속 쌓이면 Projection을 다시 만드는 작업조차 오래 걸릴 수 있다.
 
-이를 보완하기 위해  
-**특정 시점의 상태를 통째로 저장하는 방식**이 스냅샷이다.
+이를 보완하기 위해 **특정 시점의 상태를 통째로 저장하는 방식**이 스냅샷이다.
 
-예시)
+예시)  
+
 Snapshot (version = 1000)  
 balance = 120  
 
-이후에는  
-스냅샷 이후의 이벤트만 재생하면 되므로  
-전체 이벤트를 처음부터 재생할 필요가 없다.
+이후에는 스냅샷 이후의 이벤트만 재생하면 되므로 전체 이벤트를 처음부터 재생할 필요가 없다.
 
 정리하면,
 - Projection은 조회 성능을 위한 장치이고
