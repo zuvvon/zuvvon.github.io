@@ -22,7 +22,7 @@ Event Sourcing은 **이벤트를 진실의 원천으로 삼는 대신 읽기 성
 
 ## 🧩 Event Sourcing이란?
 
-Event Sourcing은 데이터의 **최종 상태(State)** 를 저장하는 대신,  
+Event Sourcing은 데이터의 **최종 상태(State)** 를 저장하는 대신,   
 상태를 변경시킨 **모든 이벤트(Event)의 이력**을 순서대로 저장하는 방식이다.
 
 전통적인 데이터 저장 방식은  
