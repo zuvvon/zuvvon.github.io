@@ -1,6 +1,6 @@
 ---
 title: "[CS] 이벤트 소싱(Event Sourcing)"
-excerpt: "Event Sourcing의 기본 개념부터 읽기 성능, Projection, Snapshot, 멱등성, CQRS 정리"
+excerpt: "Event Sourcing의 기본 개념부터 읽기 성능, Projection, Snapshot, 멱등성, CQRS 등 정리"
 
 categories:
   - CS
